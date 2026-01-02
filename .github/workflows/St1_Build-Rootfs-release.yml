@@ -2,6 +2,16 @@ name: 💿 St1_Build-Rootfs-release
 on:
   workflow_dispatch:
     inputs:
+      build_version:
+        description: "请选择构建版本"
+        required: true
+        default: '20251226'
+        type: choice
+        options:
+          - '20251226'
+          - '20251205'
+          - '20251128'
+          - '20251121'
       network_settings:
         description: "请选择初始网络配置"
         required: true
@@ -11,11 +21,11 @@ on:
           - 'static'
           - 'dhcp'
       ipaddr:
-        description: '请输入管理IP（静态地址时必填）'
+        description: '请输入管理IP（选择static时必填）'
         required: true
         default: '192.168.5.88'
       gateway:
-        description: '请输入默认网关（静态地址时必填）'
+        description: '请输入默认网关（选择static时必填）'
         required: true
         default: '192.168.5.1'
 
@@ -34,8 +44,10 @@ jobs:
         chmod +x arm64/build24.sh
         chmod +x shell/*.sh
 
-    - name: ⚙️ 设置IP和网关
+    - name: ⚙️ 设置IP、网关和版本号
       run: |
+        sed -i "s/版本号/${{ env.VERSION }}/g" "./files/etc/uci-defaults/99-custom.sh"
+        sed -i "s/版本号/${{ env.VERSION }}/g" "./files/etc/banner"
         echo "当前网络配置路径"
         CONFIG_PATH="./files/etc/uci-defaults/99-custom.sh"
         echo $CONFIG_PATH
@@ -59,7 +71,7 @@ jobs:
 
     - name: ⏬ 下载 ImageBuilder
       run: |
-        curl -L -o imagebuilder.tar.zst https://github.com/Kwonelee/iStoreOS-Actions/releases/download/iStoreOS-ImageBuilder-20251024/istoreos-imagebuilder-armsr-armv8.Linux-x86_64.tar.zst
+        curl -L -o imagebuilder.tar.zst https://github.com/Kwonelee/iStoreOS-Actions/releases/download/iStoreOS-ImageBuilder/${{ inputs.build_version }}-istoreos-imagebuilder-armsr-armv8.Linux-x86_64.tar.zst
         tar --use-compress-program=unzstd -xvf imagebuilder.tar.zst
         mv istoreos-imagebuilder-* imagebuilder
 
@@ -70,13 +82,11 @@ jobs:
         cp shell/{prepare-packages.sh,custom-packages.sh} imagebuilder/
         find files/packages/ -name "*.ipk" -exec cp {} imagebuilder/packages/ \;
         
-        mkdir -p imagebuilder/files/etc/{uci-defaults,opkg,banner1}
+        mkdir -p imagebuilder/files/etc/{uci-defaults,banner1}
         #添加开机启动脚本
         cp files/etc/uci-defaults/99-custom.sh imagebuilder/files/etc/uci-defaults/
         #替换O大打包脚本的默认banner
         cp files/etc/banner imagebuilder/files/etc/banner1/
-        mkdir -p imagebuilder/files/etc/openclash/core
-        cp files/etc/openclash/core/clash_meta imagebuilder/files/etc/openclash/core/
         #临时解决通过晶晨宝盒写入emmc后根分区变为只读状态问题
         cp files/etc/rc.local imagebuilder/files/etc/
         
@@ -109,13 +119,13 @@ jobs:
       with:
         tag_name: iStoreOS-${{ env.VERSION }}-RELEASE-${{ inputs.network_settings }}
         body: |
-          📌 版本： iStoreOS-${{ env.VERSION }}-RELEASE（imagebuilder构建，稳定版）
+          📌 版本： iStoreOS-${{ env.VERSION }}-RELEASE（imagebuilder构建，插件集成与官方一致）
           
           📂 来源： https://fw.koolcenter.com/iStoreOS/ib/armsr/
           
           🧠 内核： Please Login to iStoreOS → System → Amlogic Service → Replace the Kernel
           
-          🧩 集成： 包含了基础系统组件、驱动、网络工具、容器支持、LuCI界面及插件等。与官方集成列表基本一致
+          🧩 集成： 包含了基础系统组件、驱动、网络工具、容器支持、LuCI界面及插件等
           
           👤 用户名： root
           
