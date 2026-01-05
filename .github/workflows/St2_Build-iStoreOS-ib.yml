@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       openwrt_board:
-        description: "请选择设备型号"
+        description: "1、请选择设备型号"
         required: true
         default: "s905d_s905x3_s912_s922x-ct2000"
         type: choice
@@ -175,7 +175,7 @@ on:
           - zk-r39a
           - zysj
       openwrt_kernel:
-        description: "请选择内核版本"
+        description: "2、请选择内核版本"
         required: true
         default: "6.6.y"
         type: choice
@@ -192,14 +192,14 @@ on:
         default: true
         type: boolean
       openwrt_rootfs:
-        description: "请选择Rootfs通用底包（先确保St1有执行）"
+        description: "3、请选择Rootfs通用底包（先确保St1有执行）"
         required: true
         default: "RELEASE"
         type: choice
         options:
           - RELEASE
       network_settings:
-        description: "请选择初始网络配置（先确保St1有执行）"
+        description: "4、请选择初始网络配置（先确保St1有执行）"
         required: true
         default: "dhcp"
         type: choice
