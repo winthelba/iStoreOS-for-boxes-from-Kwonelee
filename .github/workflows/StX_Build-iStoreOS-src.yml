@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       openwrt_board:
-        description: "请选择设备型号"
+        description: "1、请选择设备型号"
         required: true
         default: "s905d_s905x3_s912_s922x-ct2000"
         type: choice
@@ -20,6 +20,7 @@ on:
           - bdy-g18-pro
           - beikeyun
           - chainedbox
+          - cm3588-nas
           - crrc
           - dc-a588
           - dg3399
@@ -32,6 +33,7 @@ on:
           - fine3399
           - firefly-rk3399
           - fmx1-pro
+          - fmx1-pro-b
           - gzpeite-p01
           - h28k
           - h66k
@@ -49,14 +51,19 @@ on:
           - lckfb-tspi
           - leez
           - lx-r3s
+          - lz-k3568
           - mrkaio-m68s
           - nanopc-t6
+          - nanopi-m5
+          - nanopi-r3s
           - nanopi-r5c
           - nanopi-r5s
           - nsy-g16-plus
           - nsy-g68-plus
+          - orangepi-3b
           - orangepi-5-plus
           - orangepi-5b
+          - orangepi-zero3
           - panther-x2
           - photonicat
           - r66s
@@ -159,6 +166,7 @@ on:
           - sv-33a6x
           - swan1-w28
           - sw799
+          - taram
           - tanix-tx6
           - tb-ls3399
           - tn3399
@@ -175,7 +183,7 @@ on:
           - zk-r39a
           - zysj
       openwrt_kernel:
-        description: "请选择内核版本"
+        description: "2、请选择内核版本"
         required: true
         default: "6.6.y"
         type: choice
@@ -193,7 +201,7 @@ on:
         type: boolean
 
 env:
-  VERSION: 24.10.4
+  VERSION: 24.10.5
 
 jobs:
   build:
