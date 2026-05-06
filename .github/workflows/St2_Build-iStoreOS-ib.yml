@@ -22,6 +22,8 @@ on:
           - bdkj-bd-one
           - bdy-g18-pro
           - beikeyun
+          - boca-tcn100
+          - cd1000
           - chainedbox
           - cm3588-nas
           - crrc
@@ -38,15 +40,19 @@ on:
           - firefly-rk3399
           - fmx1-pro
           - fmx1-pro-b
+          - gea-6319
           - gzpeite-p01
           - h28k
+          - h618-devboard
           - h66k
           - h68k
           - h69k
           - h88k
           - h88k-v3
           - h96-max-m2
+          - hk1-rbox-k8s
           - hs530r
+          - ht2
           - hugsun-x99
           - ipc-r
           - jp-tvbox
@@ -55,7 +61,9 @@ on:
           - lckfb-tspi
           - leez
           - lx-r3s
+          - lyt-t68m
           - lz-d3568
+          - lz-d3588
           - lz-k3568
           - mrkaio-m68s
           - nanopc-t4
@@ -135,6 +143,7 @@ on:
           - s905x3-ip1001m
           - s905x3-q1
           - s905x3-q2
+          - s905x3-tox1
           - s905x3-tx3
           - s905x3-tx3-bz
           - s905x3-ugoosx3
@@ -171,6 +180,7 @@ on:
           - station-m2
           - station-p2
           - sv-33a6x
+          - sv-33a6x-vpu
           - swan1-w28
           - sw799
           - taram
@@ -184,6 +194,8 @@ on:
           - wocyber-a3
           - wxy-oect
           - wxy-oect-mod
+          - x88pro20
+          - x98h
           - xiaobao
           - yskj
           - zcube1-max
@@ -195,12 +207,9 @@ on:
         default: "6.6.y"
         type: choice
         options:
-          - 5.15.y
-          - 6.1.y
           - 6.6.y
           - 6.12.y
-          - 6.6.115
-          - 6.12.47
+          - 6.18.y
       auto_kernel:
         description: "自动使用最新内核-未匹配则自动"
         required: false
